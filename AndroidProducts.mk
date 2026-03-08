@@ -19,3 +19,6 @@
 
 PRODUCT_MAKEFILES := \
      $(LOCAL_DIR)/fox_X695C.mk
+
+COMMON_LUNCH_CHOICES := \
+     fox_X695C-eng
