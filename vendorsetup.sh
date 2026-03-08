@@ -7,12 +7,17 @@ export FOX_TARGET_DEVICES="X695C,X695D,X695,Infinix-X695C,Infinix-X695D,Infinix-
 
 # Partitions Recovery
 export FOX_RECOVERY_BOOT_PARTITION="/dev/block/platform/bootdevice/by-name/boot"
-export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/by-name/system"
-export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/by-name/vendor"
+export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/by-name/super"
+export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/by-name/super"
     
 # Device Partition Setup
 export FOX_AB_DEVICE=1
 export FOX_VIRTUAL_AB_DEVICE=1
+export BOARD_USES_METADATA_PARTITION=1
+export OF_DYNAMIC_PARTITION_SUPPORT=1
+export TW_USE_FSCRYPT_POLICY=1
+export BOARD_USES_RECOVERY_AS_BOOT=1
+export TARGET_NO_RECOVERY=1
 
 # Build Optimizations
 export FOX_DELETE_AROMAFM=1
@@ -21,6 +26,7 @@ export FOX_REMOVE_AAPT=1
 # Feature Support
 export FOX_ENABLE_APP_MANAGER=1
 export FOX_USE_BASH_SHELL=1
+export FOX_ASH_IS_BASH=true
 export FOX_USE_NANO_EDITOR=1
 export FOX_USE_TAR_BINARY=1
 export FOX_USE_XZ_UTILS=1
@@ -42,21 +48,28 @@ export OF_DISABLE_OTA_MENU=1
 export OF_ALLOW_DISABLE_NAVBAR=0
 export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
 
-# Encryption & Magisk Handling
+# Encryption & Magisk Handling & GSI
 export OF_DISABLE_FORCED_ENCRYPTION=1
 export OF_DISABLE_DM_VERITY_FORCED_ENCRYPTION=1
 export OF_USE_MAGISKBOOT=1
 export OF_USE_MAGISKBOOT_FOR_ALL_PATCHES=1
+export OF_SKIP_FBE_DECRYPTION_SDKVERSION=31
+export OF_DONT_PATCH_ENCRYPTED_DEVICE=true
+export OF_SUPPORT_HW_ENCRYPTION=1
+export OF_SUPPORT_FBE_DECRYPT=1
+export OF_SUPPORT_FBE_V2=true
+export OF_FIX_DECRYPTION_ON_DATA_MEDIA=1
 
 # Advanced Functions
 export OF_ENABLE_LPTOOLS=1
 export OF_ADVANCED_SECURITY=1
 export FOX_BUGGED_AOSP_ARB_WORKAROUND="1546300800"
 export OF_KEEP_DM_VERITY=1
+export OF_DISABLE_MIUI_SPECIFIC_FEATURES=1 
 
 # UI Layout Settings
-export OF_SCREEN_H=2460
-export OF_STATUS_H=105
+export OF_SCREEN_H=2400
+export OF_STATUS_H=100
 export OF_STATUS_INDENT_LEFT=52
 export OF_STATUS_INDENT_RIGHT=52
 export OF_CLOCK_POS=1
