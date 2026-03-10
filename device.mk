@@ -95,6 +95,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@4.0-service.beanpod
 
+# Attestation
+PRODUCT_PACKAGES += \
+    vendor.mediatek.hardware.keymaster_attestation@1.1-impl \
+    vendor.mediatek.hardware.keymaster_attestation@1.1-service
+
 # TEE Daemon
 PRODUCT_PACKAGES += \
     teei_daemon
@@ -111,8 +116,18 @@ PRODUCT_PACKAGES_DEBUG += \
 # Additional Libraries
 TARGET_RECOVERY_DEVICE_MODULES += \
     libkeymaster4 \
-    libpuresoftkeymasterdevice
+    libkeymaster4support \
+    libkeymaster_messages \
+    libkeymaster_portable \
+    libpuresoftkeymasterdevice \
+    libhwbinder \
+    libhidltransport
 
 RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so
+    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4support.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster_messages.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster_portable.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libhwbinder.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libhidltransport.so
