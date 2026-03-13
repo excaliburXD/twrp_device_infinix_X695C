@@ -22,6 +22,9 @@ on fs
     start hwservicemanager
     start servicemanager
 
+    # TEE Ensured ready at boot
+    start teei_daemon
+
 on fs && property:ro.debuggable=0
     write /sys/class/udc/musb-hdrc/device/cmode 2
     start adbd
@@ -97,6 +100,13 @@ service keymaster-4-0 /vendor/bin/hw/android.hardware.keymaster@4.0-service.bean
     disabled
     seclabel u:r:recovery:s0
 
+service wait_for_keymaster /system/bin/wait_for_keymaster
+    user root
+    group root
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
+
 service mtk.plpath.utils /system/bin/mtk_plpath_utils
     class main
     user root
@@ -108,6 +118,7 @@ service mtk.plpath.utils /system/bin/mtk_plpath_utils
 on property:hwservicemanager.ready=true
     start keymaster-4-0
     start gatekeeper-1-0
+    start wait_for_keymaster
 
 on property:crypto.ready=1
     start keymaster-4-0
@@ -115,6 +126,7 @@ on property:crypto.ready=1
 on property:vendor.sys.listener.registered=true
     start gatekeeper-1-0
     start keymaster-4-0
+    start wait_for_keymaster
 
 on property:ro.crypto.state=unsupported
     stop teei_daemon
