@@ -13,6 +13,9 @@ product                                                 /product               e
 /dev/block/platform/bootdevice/by-name/md_udc           /metadata              ext4          noatime,nosuid,nodev,discard                                                                   wait,check,formattable,first_stage_mount
 /dev/block/platform/bootdevice/by-name/userdata         /data                  f2fs          noatime,nosuid,nodev,discard,noflush_merge,reserve_root=134217,resgid=1065,fsync_mode=nobarrier,inlinecrypt wait,check,formattable,quota,latemount,resize,reservedsize=128m,checkpoint=fs,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption
 
+# Real Block Userdata
+#/dev/block/sdc56                                        /data                  f2fs          noatime,nosuid,nodev,discard,noflush_merge,reserve_root=134217,resgid=1065,fsync_mode=nobarrier,inlinecrypt wait,check,formattable,quota,latemount,resize,reservedsize=128m,checkpoint=fs,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption
+
 # Need to have this entry in here even though the mount point itself is no longer needed.
 # The update_engine code looks for this entry in order to determine the boot device address
 # and fails if it does not find it.

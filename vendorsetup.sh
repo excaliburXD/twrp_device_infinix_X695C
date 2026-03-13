@@ -7,8 +7,10 @@ export FOX_TARGET_DEVICES="X695C,X695D,X695,Infinix-X695C,Infinix-X695D,Infinix-
 
 # Partitions Recovery
 export FOX_RECOVERY_BOOT_PARTITION="/dev/block/platform/bootdevice/by-name/boot"
-export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/by-name/super"
-export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/by-name/super"
+export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/by-name/system"
+export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/by-name/vendor"
+export FOX_RECOVERY_SYSTEM_EXT_PARTITION="/dev/block/by-name/system_ext"
+export FOX_RECOVERY_PRODUCT_PARTITION="/dev/block/by-name/product"
     
 # Device Partition Setup
 export FOX_AB_DEVICE=1

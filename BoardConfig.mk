@@ -19,10 +19,8 @@
 
 DEVICE_PATH := device/infinix/X695C
 
-# For building with minimal manifest
+# For building with minimal manifest & Build Hacks
 ALLOW_MISSING_DEPENDENCIES := true
-
-# Build Hacks
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
@@ -64,10 +62,11 @@ BOARD_KERNEL_SECOND_OFFSET := 0xbff88000
 BOARD_KERNEL_TAGS_OFFSET := 0x0bc08000
 BOARD_DTB_OFFSET := 0x0bc08000
 
-# Prebuilt
+# Prebuilt kernel 4.14.186-g3f7f4bc83b0d-dirty
 BOARD_KERNEL_IMAGE_NAME := kernel
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
+TARGET_KERNEL_VERSION := 4.14
 TARGET_FORCE_PREBUILT_KERNEL := true
 
 # MKBOOTIMG-ARGS
@@ -189,10 +188,6 @@ TW_OEM_STORAGE := 0
 TW_HAS_MTP := true
 TW_MTP_DEVICE := /dev/mtp_usb
 TW_NO_USB_STORAGE := false
-TW_INTERNAL_STORAGE_PATH := "/data/media/0"
-TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
-TW_EXTERNAL_STORAGE_PATH := "/external_sd"
-TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.%d/file
 
 # Debug

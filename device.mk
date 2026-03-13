@@ -22,11 +22,13 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
+
+# Virtual A/B
+ENABLE_VIRTUAL_AB := true
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 
-ENABLE_VIRTUAL_AB := true
+# A/B
 AB_OTA_UPDATER := true
-
 AB_OTA_PARTITIONS += \
     boot \
     dtbo \
@@ -60,8 +62,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # API
-PRODUCT_SHIPPING_API_LEVEL := 30
-PRODUCT_TARGET_VNDK_VERSION := 30
+PRODUCT_SHIPPING_API_LEVEL := 28
 BOARD_VNDK_VERSION := current
 
 # Boot control HAL
@@ -117,6 +118,7 @@ PRODUCT_PACKAGES_DEBUG += \
 TARGET_RECOVERY_DEVICE_MODULES += \
     libkeymaster4 \
     libkeymaster4support \
+    libkeymaster4_1support \
     libkeymaster_messages \
     libkeymaster_portable \
     libpuresoftkeymasterdevice \
@@ -127,6 +129,7 @@ TARGET_RECOVERY_DEVICE_MODULES += \
 RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4support.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4_1support.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster_messages.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster_portable.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so \
