@@ -121,7 +121,8 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     libkeymaster_portable \
     libpuresoftkeymasterdevice \
     libhwbinder \
-    libhidltransport
+    libhidltransport \
+    wait_for_keymaster
 
 RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
@@ -130,4 +131,5 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster_portable.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libhwbinder.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libhidltransport.so
+    $(TARGET_OUT_SHARED_LIBRARIES)/libhidltransport.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/wait_for_keymaster
