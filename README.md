@@ -44,7 +44,7 @@ Current state of features (from [here](https://twrp.me/faq/OfficialMaintainer.ht
 
 ```bash
 source build/envsetup.sh
-lunch twrp_x695c-eng
+lunch twrp_X695C-eng
 mka bootimage
 ```
 
