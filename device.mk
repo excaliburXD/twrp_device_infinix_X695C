@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2020 The Android Open Source Project
-# Copyright (C) 2020 The TWRP Open Source Project
+# Copyright (C) 2026 The TWRP Open Source Project
 # Copyright (C) 2025 The OrangeFox Recovery Project
 # Copyright (C) 2020 SebaUbuntu's TWRP device tree generator
 #
@@ -60,6 +60,12 @@ PRODUCT_PACKAGES += \
 
 # Dynamic Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
+PRODUCT_BUILD_SUPER_PARTITION := true
+
+# Crypto
+PRODUCT_ENFORCE_VINTF_MANIFEST :=
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.crypto.volume.filenames_mode=aes-256-cts
 
 # API
 PRODUCT_SHIPPING_API_LEVEL := 28
@@ -105,29 +111,11 @@ PRODUCT_PACKAGES_DEBUG += \
 TARGET_RECOVERY_DEVICE_MODULES += \
     android.hardware.keymaster@4.0 \
     libkeymaster4 \
-    libkeymaster41 \
-    libkeymaster4support \
-    libkeymaster4_1support \
-    libkeymaster_messages \
-    libkeymaster_portable \
     libpuresoftkeymasterdevice \
-    libhwbinder \
-    libhidltransport \
-    libhardware \
-    libhidlbase \
-    libutils
+    libhardware_legacy
 
 RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.keymaster@4.0 \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster41.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4support.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4_1support.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster_messages.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster_portable.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libhwbinder.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libhidltransport.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libhardware.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libhidlbase \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libutils
+    $(TARGET_OUT_SHARED_LIBRARIES)/libhardware_legacy.so
