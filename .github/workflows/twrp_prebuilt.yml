@@ -163,6 +163,13 @@ jobs:
           make clean
           make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
 
+      - name: Check Build Output
+        run: |
+          DEVICE="${{ github.event.inputs.DEVICE_NAME }}"
+          OUT_DIR="android-recovery/out/target/product/${DEVICE}"
+          echo "=== Files in output directory ==="
+          ls -la "${OUT_DIR}/" | grep -E '\.(img|zip)$'
+
       - name: Get Build Info
         id: buildinfo
         run: |
@@ -177,7 +184,11 @@ jobs:
           # Build date
           echo "BUILD_DATE=$(date +%Y%m%d-%H%M)" >> $GITHUB_ENV
           
-          # Get TWRP version — coba beberapa lokasi yang umum
+          # Compact date for filename (ddmmyyyy)
+          FILE_DATE=$(date +%d%m%Y)
+          echo "FILE_DATE=$FILE_DATE" >> $GITHUB_ENV
+          
+          # Get TWRP version
           TWRP_VERSION=$(grep -rohP 'TW_MAIN_VERSION\s+\K\d+\.\d+\.\d+' android-recovery/bootable/recovery/ 2>/dev/null | head -1)
           if [ -z "$TWRP_VERSION" ]; then
             TWRP_VERSION=$(grep -rohP 'TW_VERSION_STR\s+"\K[^"]+' android-recovery/bootable/recovery/ 2>/dev/null | head -1)
@@ -187,19 +198,18 @@ jobs:
             [ -n "$TWRP_VERSION" ] && TWRP_VERSION="${TWRP_VERSION}.x.x"
           fi
           if [ -z "$TWRP_VERSION" ]; then
-            TWRP_VERSION="3.x.x"
+            TWRP_VERSION="3.7.1_11"
           fi
           echo "TWRP_VERSION=$TWRP_VERSION" >> $GITHUB_ENV
           
-          # Rename output image — boot.img sudah ada .img jadi jangan double
+          # Rename: TWRP-VERSION-DEVICE-DATE.img
           DEVICE="${{ github.event.inputs.DEVICE_NAME }}"
           TARGET="${{ github.event.inputs.BUILD_TARGET }}"
           OUT_DIR="android-recovery/out/target/product/${DEVICE}"
           
-          cp "${OUT_DIR}/${TARGET}.img" "${OUT_DIR}/TWRP-${TWRP_VERSION}-${DEVICE}-${COMMIT_SHORT}-boot.img"
+          cp "${OUT_DIR}/${TARGET}.img" "${OUT_DIR}/TWRP-${TWRP_VERSION}-${DEVICE}-${FILE_DATE}.img"
           
-          # Tanpa .img di akhir, karena nama file sudah include .img
-          echo "BOOT_IMG=TWRP-${TWRP_VERSION}-${DEVICE}-${COMMIT_SHORT}-boot.img" >> $GITHUB_ENV
+          echo "BOOT_IMG=TWRP-${TWRP_VERSION}-${DEVICE}-${FILE_DATE}.img" >> $GITHUB_ENV
 
       - name: Upload Raw Image to GitHub Releases
         uses: softprops/action-gh-release@v2
