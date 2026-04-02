@@ -177,27 +177,35 @@ jobs:
           # Build date
           echo "BUILD_DATE=$(date +%Y%m%d-%H%M)" >> $GITHUB_ENV
           
-          # Get TWRP version
-          TWRP_VERSION=$(grep -oP 'TW_MAIN_VERSION="\K[^"]+' android-recovery/bootable/recovery/variables.h 2>/dev/null || echo "unknown")
-          if [ "$TWRP_VERSION" = "unknown" ]; then
-            TWRP_VERSION=$(grep -oP 'TW_VERSION_STR="\K[^"]+' android-recovery/bootable/recovery/variables.h 2>/dev/null || echo "3.x.x")
+          # Get TWRP version — coba beberapa lokasi yang umum
+          TWRP_VERSION=$(grep -rohP 'TW_MAIN_VERSION\s+\K\d+\.\d+\.\d+' android-recovery/bootable/recovery/ 2>/dev/null | head -1)
+          if [ -z "$TWRP_VERSION" ]; then
+            TWRP_VERSION=$(grep -rohP 'TW_VERSION_STR\s+"\K[^"]+' android-recovery/bootable/recovery/ 2>/dev/null | head -1)
+          fi
+          if [ -z "$TWRP_VERSION" ]; then
+            TWRP_VERSION=$(grep -rohP 'TW_MAIN_VERSION\s+\K\d+' android-recovery/bootable/recovery/ 2>/dev/null | head -1)
+            [ -n "$TWRP_VERSION" ] && TWRP_VERSION="${TWRP_VERSION}.x.x"
+          fi
+          if [ -z "$TWRP_VERSION" ]; then
+            TWRP_VERSION="3.x.x"
           fi
           echo "TWRP_VERSION=$TWRP_VERSION" >> $GITHUB_ENV
           
-          # Rename output image with TWRP version
+          # Rename output image — boot.img sudah ada .img jadi jangan double
           DEVICE="${{ github.event.inputs.DEVICE_NAME }}"
           TARGET="${{ github.event.inputs.BUILD_TARGET }}"
           OUT_DIR="android-recovery/out/target/product/${DEVICE}"
           
           cp "${OUT_DIR}/${TARGET}.img" "${OUT_DIR}/TWRP-${TWRP_VERSION}-${DEVICE}-${COMMIT_SHORT}-boot.img"
           
+          # Tanpa .img di akhir, karena nama file sudah include .img
           echo "BOOT_IMG=TWRP-${TWRP_VERSION}-${DEVICE}-${COMMIT_SHORT}-boot.img" >> $GITHUB_ENV
 
       - name: Upload Raw Image to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            android-recovery/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ env.BOOT_IMG }}.img
+            android-recovery/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ env.BOOT_IMG }}
           name: Unofficial TWRP ${{ env.TWRP_VERSION }} for ${{ github.event.inputs.DEVICE_NAME }} - ${{ env.BUILD_DATE }}
           tag_name: ${{ github.run_id }}
           body: |
@@ -208,7 +216,7 @@ jobs:
             **Manifest:** ${{ inputs.MANIFEST_BRANCH }}
             **Maintainer:** @${{ github.actor }}
             **Last Commit:** `${{ env.COMMIT_SHORT }}` — ${{ env.COMMIT_DATE }}
-            **Status:** prebulit-Infinix-X695C
+            **Status:** Booted and tested
 
       - name: Cleanup after build
         run: |
