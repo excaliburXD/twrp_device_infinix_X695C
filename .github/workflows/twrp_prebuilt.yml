@@ -96,7 +96,7 @@ jobs:
       - name: Setup CCache
         uses: hendrikmuhs/ccache-action@v1.2
         with:
-          key: pbrp-${{ github.event.inputs.DEVICE_NAME }}
+          key: twrp_prebuilt-${{ github.event.inputs.DEVICE_NAME }}
           max-size: 15G
         
       - name: Install Git Repo Tool
