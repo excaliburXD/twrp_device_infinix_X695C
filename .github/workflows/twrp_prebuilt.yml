@@ -1,4 +1,4 @@
-name: Recovery Builder - TWRP-prebuilt
+name: Recovery Builder - TWRP-Prebuilt
 
 on:
   workflow_dispatch:
@@ -198,7 +198,7 @@ jobs:
             [ -n "$TWRP_VERSION" ] && TWRP_VERSION="${TWRP_VERSION}.x.x"
           fi
           if [ -z "$TWRP_VERSION" ]; then
-            TWRP_VERSION="3.7.1_11"
+            TWRP_VERSION="3.7.0_11"
           fi
           echo "TWRP_VERSION=$TWRP_VERSION" >> $GITHUB_ENV
           
