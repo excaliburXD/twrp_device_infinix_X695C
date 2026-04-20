@@ -33,7 +33,7 @@ on boot
     chown system system /sys/bus/platform/devices/utos/unload_ut_drv
     chown system system /sys/bus/platform/devices/utos/notify_ree_dci_handler
 
-#for All mode
+# for All mode
 on load_persist_props_action
     write /proc/bootprof "start teei cfg (on load_persist_props_action)"
     mkdir /data/vendor/thh
