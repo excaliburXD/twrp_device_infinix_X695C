@@ -40,5 +40,12 @@
 /external_sd              auto     /dev/block/mmcblk0p1 /dev/block/mmcblk0 /dev/block/mmcblk1p1    flags=display="Micro SD Card";storage;wipeingui;removable;backup=0
 /usb_otg                  auto     /dev/block/sda1 /dev/block/sda /dev/block/sdd1                  flags=display="USB-OTG";storage;wipeingui;removable;backup=0
 
-# Allow Flash GSI Image
-/system_image             emmc     /dev/block/mapper/system_a                                      flags=slotselect
+# Super partitions mount
+/system_root      ext4   /dev/block/mapper/system                flags=backup=0;removable;slotselect
+/system_ext       ext4   /dev/block/mapper/system_ext            flags=backup=0;removable;slotselect
+/vendor           ext4   /dev/block/mapper/vendor                flags=backup=0;removable;slotselect
+/product          ext4   /dev/block/mapper/product               flags=backup=0;removable;slotselect
+/system_img       emmc   /dev/block/mapper/system                flags=display="System image";backup=1;flashimg;slotselect
+/system_ext_img   emmc   /dev/block/mapper/system_ext            flags=display="System_ext image";backup=1;flashimg;slotselect
+/vendor_img       emmc   /dev/block/mapper/vendor                flags=display="Vendor image";backup=1;flashimg;slotselect
+/product_img      emmc   /dev/block/mapper/product               flags=display="Product image";backup=1;flashimg;slotselect 
