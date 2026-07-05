@@ -38,15 +38,21 @@ on fs
     mkdir /mnt/vendor/nvdata 0700 root root
     mkdir /mnt/vendor/nvcfg 0700 root root
     mkdir /mnt/vendor/persist 0700 root root
+    mkdir /metadata 0700 root root
+    mkdir /tmp/thh 0755 system system
+    mkdir /data 0771 system system
+    mkdir /data/vendor 0771 system system
     mount ext4 /dev/block/by-name/protect1 /mnt/vendor/protect_f
     mount ext4 /dev/block/by-name/protect2 /mnt/vendor/protect_s
     mount ext4 /dev/block/by-name/nvdata /mnt/vendor/nvdata
     mount ext4 /dev/block/by-name/nvcfg /mnt/vendor/nvcfg
     mount ext4 /dev/block/by-name/persist /mnt/vendor/persist
+    mount ext4 /dev/block/by-name/md_udc /metadata noatime nosuid nodev discard wait
     symlink /mnt/vendor/protect_f /vendor/protect_f
     symlink /mnt/vendor/protect_s /vendor/protect_s
     symlink /mnt/vendor/nvcfg /vendor/nvcfg
     symlink /mnt/vendor/nvdata /vendor/nvdata
+    symlink /tmp/thh /data/vendor/thh
 
     install_keyring
 
