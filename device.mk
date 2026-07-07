@@ -38,7 +38,7 @@ PRODUCT_PACKAGES += \
     cppreopts.sh
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.build.security_patch=2099-12-31
+    ro.vendor.build.security_patch=2022-11-05
 
 # API
 PRODUCT_SHIPPING_API_LEVEL := 30
