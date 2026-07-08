@@ -1,4 +1,4 @@
-name: Recovery Builder - OFOX Legacy A11
+name: Recovery Builder - OFOX
 
 on:
   workflow_dispatch:
