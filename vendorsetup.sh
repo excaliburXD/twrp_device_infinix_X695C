@@ -20,7 +20,7 @@ export FOX_USE_XZ_UTILS=1
 
 # Build Metadata
 export FOX_BUILD_TYPE="prebuilt"
-export FOX_MAINTAINER_PATCH_VERSION="A11-A12.1"
+export FOX_MAINTAINER_PATCH_VERSION="11"
 export FOX_VARIANT="XOS"
 export OF_MAINTAINER="excaliburXD"
 
