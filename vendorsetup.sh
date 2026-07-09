@@ -9,14 +9,16 @@ export OF_QUICK_BACKUP_RESTORE=1
 # Build Optimizations
 export FOX_DELETE_AROMAFM=1
 export FOX_REMOVE_AAPT=1
+export OF_NO_MAGISK=1               
+export OF_DISABLE_SPLASH_CHANGE=1        
 
-# Feature Support
-export FOX_ENABLE_APP_MANAGER=1
-export FOX_USE_BASH_SHELL=1
-export FOX_ASH_IS_BASH=true
-export FOX_USE_NANO_EDITOR=1
-export FOX_USE_TAR_BINARY=1
-export FOX_USE_XZ_UTILS=1
+# Feature Support (temporarily disabled to save space)
+export FOX_ENABLE_APP_MANAGER=0         
+export FOX_USE_BASH_SHELL=0               
+export FOX_ASH_IS_BASH=false          
+export FOX_USE_NANO_EDITOR=0           
+export FOX_USE_TAR_BINARY=0               
+export FOX_USE_XZ_UTILS=0                
 
 # Build Metadata
 export FOX_BUILD_TYPE="prebuilt"
@@ -45,12 +47,12 @@ export OF_DONT_PATCH_ENCRYPTED_DEVICE=true
 export OF_FIX_DECRYPTION_ON_DATA_MEDIA=1
 
 # Advanced Functions
-export OF_ENABLE_LPTOOLS=1
-export OF_ADVANCED_SECURITY=1
+export OF_ENABLE_LPTOOLS=0       
+export OF_ADVANCED_SECURITY=0        
 export FOX_BUGGED_AOSP_ARB_WORKAROUND="1546300800"
 export FOX_USE_DATA_RECOVERY_FOR_SETTINGS=1
 export OF_LOOP_DEVICE_ERRORS_TO_LOG=1
-export OF_DISABLE_MIUI_SPECIFIC_FEATURES=1 
+export OF_DISABLE_MIUI_SPECIFIC_FEATURES=1
 
 # UI Layout Settings
 export OF_SCREEN_H=2460
