@@ -183,20 +183,6 @@ jobs:
         cd ${{ github.event.inputs.DEVICE_PATH }}
         echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
-    - name: Clone Common Tree
-      run: |
-        cd ${GITHUB_WORKSPACE}/OrangeFox/fox_${{ inputs.MANIFEST_BRANCH }}
-        COMMON_URL="${{ github.event.inputs.COMMON_TREE }}"
-        TOKEN="${{ secrets.RECOVERY }}"
-        if [ -n "$TOKEN" ]; then
-          AUTHED_URL=$(echo $COMMON_URL | sed -e "s#https://#https://${TOKEN}@#")
-          git clone "$AUTHED_URL" -b ${{ github.event.inputs.COMMON_TREE_BRANCH }} ./device/transsion/mt6785-common
-        else
-          git clone "$COMMON_URL" -b ${{ github.event.inputs.COMMON_TREE_BRANCH }} ./device/transsion/mt6785-common
-        fi
-
-
-
     - name: Find Makefile
       run: |
         cd ${GITHUB_WORKSPACE}/OrangeFox/fox_${{ inputs.MANIFEST_BRANCH }}
