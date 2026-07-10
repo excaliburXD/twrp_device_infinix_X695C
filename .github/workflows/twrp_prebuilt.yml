@@ -128,26 +128,26 @@ jobs:
 
       - name: Copy local manifest
         run: |
-          cd android-recovery{{ inputs.MANIFEST_BRANCH }}
+          cd android-recovery
           mkdir -p .repo/local_manifests
           cp ${{ github.workspace }}/.github/local_manifests/*.xml .repo/local_manifests/
           echo "=== local_manifests/ contents ==="
           ls -la .repo/local_manifests/
           for f in .repo/local_manifests/*.xml; do
-          echo "--- $f ---"
-          cat "$f"
+            echo "--- $f ---"
+            cat "$f"
           done
 
       - name: Re-sync projects to apply local manifest
         run: |
-         cd android-recovery{{ inputs.MANIFEST_BRANCH }}
-         repo sync -c --force-sync -j$(nproc --all) vendor/twrp
-         echo "=== verify vendor/twrp is the fork ==="
-         cd vendor/twrp
-         git remote -v
-         git log --oneline -3
-         echo "--- BoardConfigTWRP.mk ---"
-         cat config/BoardConfigTWRP.mk
+          cd android-recovery
+          repo sync -c --force-sync -j$(nproc --all) vendor/twrp
+          echo "=== verify vendor/twrp is the fork ==="
+          cd vendor/twrp
+          git remote -v
+          git log --oneline -3
+          echo "--- BoardConfigTWRP.mk ---"
+          cat config/BoardConfigTWRP.mk
 
       - name: Clone Device Tree
         run: |
@@ -245,8 +245,8 @@ jobs:
             Built via **GitHub Actions For Infinix Note 10 Pro NFC**
 
             **TWRP Version:** ${{ env.TWRP_VERSION }}
-            **Device:** ${{ inputs.DEVICE_NAME }}
-            **Manifest:** ${{ inputs.MANIFEST_BRANCH }}
+            **Device:** ${{ github.event.inputs.DEVICE_NAME }}
+            **Manifest:** ${{ github.event.inputs.MANIFEST_BRANCH }}
             **Maintainer:** @${{ github.actor }}
             **Last Commit:** `${{ env.COMMIT_SHORT }}` — ${{ env.COMMIT_DATE }}
             **Status:** Booted and tested
@@ -259,3 +259,4 @@ jobs:
           rm -rf android-recovery/out
           sudo apt clean
           echo "Cleanup complete."
+          
