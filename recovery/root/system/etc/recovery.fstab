@@ -15,7 +15,8 @@ product /product ext4 ro wait,slotselect,logical
 
 # Metadata - Userdata
 /dev/block/by-name/md_udc /metadata ext4 noatime,nosuid,nodev,discard wait,check,formattable
-/dev/block/by-name/userdata /data f2fs noatime,nosuid,nodev,discard,noflush_merge,reserve_root=134217,resgid=1065,tran_gc,inlinecrypt wait,check,formattable,quota,resize,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption
+#/dev/block/by-name/userdata /data f2fs noatime,nosuid,nodev,discard,noflush_merge,reserve_root=134217,resgid=1065,tran_gc,inlinecrypt wait,check,formattable,quota,resize,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption
+/dev/block/by-name/userdata /data f2fs noatime,nosuid,nodev,discard,noflush_merge,reserve_root=134217,resgid=1065,tran_gc wait,check,formattable,latemount,resize,reservedsize=128m,checkpoint=fs,fsverity
 
 # Tranfs
 /dev/block/by-name/tranfs /tranfs ext4 noatime,nosuid,nodev,noauto_da_alloc,discard wait,check,formattable
