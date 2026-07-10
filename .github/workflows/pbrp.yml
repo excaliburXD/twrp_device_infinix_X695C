@@ -82,6 +82,12 @@ jobs:
         distribution: 'zulu'
         java-version: '8'
 
+    - name: Setup CCache
+      uses: hendrikmuhs/ccache-action@v1.2
+      with:
+          key: pbrp_prebuilt-${{ github.event.inputs.DEVICE_NAME }}
+          max-size: 15G
+
     - name: Setup SSH Keys
       if: ${{ startsWith(github.event.inputs.MANIFEST_URL, 'git@github.com') }}
       uses: webfactory/ssh-agent@v0.5.4
@@ -111,6 +117,29 @@ jobs:
         repo sync -j$(nproc --all) --force-sync
       working-directory: workspace
       
+    - name: Copy local manifest
+      run: |
+          cd workspace{{ inputs.MANIFEST_BRANCH }}
+          mkdir -p .repo/local_manifests
+          cp ${{ github.workspace }}/.github/local_manifests/*.xml .repo/local_manifests/
+          echo "=== local_manifests/ contents ==="
+          ls -la .repo/local_manifests/
+          for f in .repo/local_manifests/*.xml; do
+          echo "--- $f ---"
+          cat "$f"
+          done
+
+    - name: Re-sync projects to apply local manifest
+      run: |
+         cd workspace{{ inputs.MANIFEST_BRANCH }}
+         repo sync -c --force-sync -j$(nproc --all) vendor/twrp
+         echo "=== verify vendor/twrp is the fork ==="
+         cd vendor/twrp
+         git remote -v
+         git log --oneline -3
+         echo "--- BoardConfigTWRP.mk ---"
+         cat config/BoardConfigTWRP.mk
+         
     - name: Clone device tree
       run: |
         git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
@@ -148,6 +177,8 @@ jobs:
       run: |
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
+        export CCACHE_EXEC=$(which ccache)
+        export USE_CCACHE=1
         lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
