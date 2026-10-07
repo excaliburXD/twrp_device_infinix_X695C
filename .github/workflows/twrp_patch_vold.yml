@@ -1,4 +1,4 @@
-name: Recovery Builder - TWRP patch vold by sebaubuntu
+name: Recovery Builder - TWRP patch vold by Lineage 
 
 on:
   workflow_dispatch:
@@ -129,15 +129,24 @@ jobs:
           <?xml version="1.0" encoding="UTF-8"?>
           <manifest>
             <remove-project name="platform/system/vold" />
-            <project path="system/vold" name="SebaUbuntu/android_system_vold" revision="android-11.0" remote="github" />
+            <project path="system/vold" name="LineageOS/android_system_vold" revision="lineage-18.1" remote="github" />
           </manifest>
           EOF
-          
+
       - name: Repo Sync
         run: |
           cd android-recovery
           repo sync -c -j$(nproc --all) --current-branch --force-sync --no-tags --no-clone-bundle --optimized-fetch --prune
 
+      - name: Patch system/vold for FBE v2
+        run: |
+          cd android-recovery/system/vold
+          git config user.name "excaliburXD"
+          git config user.email "eexcalibur32@gmail.com"
+          
+          # Fetch commit patch FBE v2 from Gerrit Lineage / TWRP
+          git fetch https://github.com/LineageOS/android_system_vold.git refs/changes/31/318331/1 && git cherry-pick FETCH_HEAD || true
+          
       - name: Copy local manifest
         run: |
           cd android-recovery
