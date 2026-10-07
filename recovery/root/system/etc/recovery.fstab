@@ -14,4 +14,3 @@ product                                    /product         ext4                
 /dev/block/platform/bootdevice/by-name/misc         /misc            emmc                defaults       defaults
 
 /dev/block/by-name/boot                             /boot            emmc                defaults       slotselect
-rmattable
