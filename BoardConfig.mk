@@ -8,6 +8,7 @@
 #
 
 DEVICE_PATH := device/infinix/X695C
+PREBUILT_PATH := $(DEVICE_PATH)/prebuilt
 
 # For building with minimal manifest & Build Hacks
 ALLOW_MISSING_DEPENDENCIES := true
