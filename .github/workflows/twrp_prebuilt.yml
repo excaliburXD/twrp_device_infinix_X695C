@@ -1,4 +1,4 @@
-name: Recovery Builder - TWRP-Prebuilt
+name: Recovery Builder - TWRP patch vold by sebaubuntu
 
 on:
   workflow_dispatch:
@@ -121,6 +121,17 @@ jobs:
           git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
           repo init --depth=1 -u ${{ steps.manifest.outputs.value }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
 
+      - name: Add custom vold to Local Manifest
+        run: |
+          mkdir -p .repo/local_manifests
+          cat <<EOF > .repo/local_manifests/vold.xml
+          <?xml version="1.0" encoding="UTF-8"?>
+          <manifest>
+            <remove-project name="platform/system/vold" />
+            <project path="system/vold" name="SebaUbuntu/android_system_vold" revision="android-11.0" remote="github" />
+          </manifest>
+          EOF
+          
       - name: Repo Sync
         run: |
           cd android-recovery
