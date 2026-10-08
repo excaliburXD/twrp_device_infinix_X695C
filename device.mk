@@ -70,6 +70,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     mtk_plpath_utils.recovery
 
+# libshim Beanpod 
+PRODUCT_PACKAGES += \
+    libshim_beanpod
+
 PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
 
