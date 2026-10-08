@@ -1,4 +1,4 @@
-name: Recovery Builder - TWRP patch vold by Lineage 
+name: Recovery Builder - TWRP patch libshim Beanpod 
 
 on:
   workflow_dispatch:
@@ -121,32 +121,11 @@ jobs:
           git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
           repo init --depth=1 -u ${{ steps.manifest.outputs.value }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
 
-      - name: Add custom vold to Local Manifest
-        run: |
-          cd android-recovery
-          mkdir -p .repo/local_manifests
-          cat <<EOF > .repo/local_manifests/vold.xml
-          <?xml version="1.0" encoding="UTF-8"?>
-          <manifest>
-            <remove-project name="platform/system/vold" />
-            <project path="system/vold" name="LineageOS/android_system_vold" revision="lineage-18.1" remote="github" />
-          </manifest>
-          EOF
-
       - name: Repo Sync
         run: |
           cd android-recovery
           repo sync -c -j$(nproc --all) --current-branch --force-sync --no-tags --no-clone-bundle --optimized-fetch --prune
 
-      - name: Patch system/vold for FBE v2
-        run: |
-          cd android-recovery/system/vold
-          git config user.name "excaliburXD"
-          git config user.email "eexcalibur32@gmail.com"
-          
-          # Fetch commit patch FBE v2 from Gerrit Lineage / TWRP
-          git fetch https://review.lineageos.org/LineageOS/android_system_vold refs/changes/31/318331/1 && git cherry-pick FETCH_HEAD
-          
       - name: Copy local manifest
         run: |
           cd android-recovery
@@ -196,7 +175,7 @@ jobs:
             exit 1
           fi
 
-      - name: Building Recovery TWRP with Patch Vold
+      - name: Building Recovery TWRP with Patch libshim Beanpod
         run: |
           cd android-recovery
           source build/envsetup.sh
