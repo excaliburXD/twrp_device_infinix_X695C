@@ -145,7 +145,7 @@ jobs:
           git config user.email "eexcalibur32@gmail.com"
           
           # Fetch commit patch FBE v2 from Gerrit Lineage / TWRP
-          git fetch https://github.com/LineageOS/android_system_vold.git refs/changes/31/318331/1 && git cherry-pick FETCH_HEAD || true
+          git fetch https://review.lineageos.org/LineageOS/android_system_vold refs/changes/31/318331/1 && git cherry-pick FETCH_HEAD
           
       - name: Copy local manifest
         run: |
