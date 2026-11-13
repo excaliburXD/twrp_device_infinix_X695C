@@ -13,7 +13,7 @@ LOCAL_PATH := device/infinix/X695C
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
 # Virtual A/B
-$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 
 # Lets recovery verify GSI-signed system images (harmless otherwise)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/developer_gsi_keys.mk)
