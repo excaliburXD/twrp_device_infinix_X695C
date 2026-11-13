@@ -1,0 +1,69 @@
+on init
+    setprop sys.usb.ffs.aio_compat 1
+    setprop sys.usb.configfs 1
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw:/system/lib64/hw
+
+on fs
+    install_keyring
+
+on post-fs
+    start boot-hal-1-1
+
+on boot
+    start health-hal-2-1
+
+# Keymaster must see the installed ROM's version/patch levels before it starts (prepdecrypt-everpal.sh).
+# teei_daemon + gatekeeper don't depend on version/patch levels: start them at once, from the recovery's own
+# /vendor (PBRP later mounts the ROM's vendor over it, which has no gatekeeper@1.0-service-recovery).
+on property:hwservicemanager.ready=true
+    start teei_daemon
+    start gatekeeper-1-0
+    start prepdecrypt-X695C
+
+on property:vendor.prepdecrypt.everpal.done=1
+    start keymaster-4-0-beanpod
+
+service prepdecrypt-X695C /system/bin/prepdecrypt-X695C.sh
+    oneshot
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+# After decryption only the TEE services are stopped. servicemanager/hwservicemanager must keep
+# running: update_engine_sideload reaches IBootControl through hwservicemanager (A/B ROM installs)
+# and the vibrator is an AIDL service registered with servicemanager.
+on property:ro.crypto.state=unsupported
+    stop teei_daemon
+    stop keymaster-4-0-beanpod
+    stop gatekeeper-1-0
+
+on property:ro.crypto.state=unencrypted
+    stop teei_daemon
+    stop keymaster-4-0-beanpod
+    stop gatekeeper-1-0
+
+on property:twrp.decrypt.done=true
+    stop teei_daemon
+    stop keymaster-4-0-beanpod
+    stop gatekeeper-1-0
+
+service keystore_auth /system/bin/keystore_auth
+    oneshot
+    user system
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service keystore /system/bin/keystore /tmp/misc/keystore
+    user root
+    group root drmrpc readproc log
+    disabled
+    seclabel u:r:recovery:s0
+
+service keymaster-4-0-beanpod /vendor/bin/hw/android.hardware.keymaster@4.0-service.beanpod
+    user root
+    group root drmrpc
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
