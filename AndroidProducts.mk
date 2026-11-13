@@ -8,9 +8,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-     $(LOCAL_DIR)/twrp_X695C.mk
+     $(LOCAL_DIR)/twrp_X695C.mk \
      $(LOCAL_DIR)/pb_X695C.mk
 
 COMMON_LUNCH_CHOICES := \
-     twrp_X695C-eng
+     twrp_X695C-eng \
      pb_X695C-eng
