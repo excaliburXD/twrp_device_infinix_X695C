@@ -1,4 +1,4 @@
-name: Recovery Builder - TWRP patch libshim Beanpod 
+name: Recovery Builder - TWRP patch
 
 on:
   workflow_dispatch:
@@ -27,6 +27,10 @@ on:
         description: 'Device Codename'
         required: true
         default: 'X695C'
+      MAKEFILE_NAME:
+        description: 'MAKEFILE_NAME'
+        required: true
+        default: 'twrp_X695C'
       BUILD_TARGET:
         description: 'Build Target'
         required: true
@@ -175,7 +179,7 @@ jobs:
             exit 1
           fi
 
-      - name: Building Recovery TWRP with Patch libshim Beanpod
+      - name: Building Recovery TWRP
         run: |
           cd android-recovery
           source build/envsetup.sh
