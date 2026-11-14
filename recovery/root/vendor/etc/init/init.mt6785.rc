@@ -20,7 +20,7 @@ on property:hwservicemanager.ready=true
     start gatekeeper-1-0
     start prepdecrypt-X695C
 
-on property:vendor.prepdecrypt.everpal.done=1
+on property:vendor.prepdecrypt.X695C.done=1
     start keymaster-4-0-beanpod
 
 service prepdecrypt-X695C /system/bin/prepdecrypt-X695C.sh
