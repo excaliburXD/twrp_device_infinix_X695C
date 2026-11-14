@@ -153,6 +153,23 @@ jobs:
           echo "--- BoardConfigTWRP.mk ---"
           cat config/BoardConfigTWRP.mk
 
+      - name: Inspect Metadata Encryption KeyStorage
+        run: |
+          cd android-recovery
+
+          echo "========== VOLD SOURCE VERSION =========="
+          git -C system/vold log -1 --format='%H %cs %s'
+
+          echo "========== KEYSTORAGE IMPLEMENTATION =========="
+          grep -n -C 5 -E \
+            'kCurrentVersion|kFn_stretching|stretching|retrieveKey' \
+            system/vold/KeyStorage.cpp || true
+
+          echo "========== METADATA CRYPT IMPLEMENTATION =========="
+          grep -n -C 5 -E \
+            'retrieveKey|stretching|kCurrentVersion' \
+            system/vold/MetadataCrypt.cpp || true
+            
       - name: Clone Device Tree
         run: |
           cd android-recovery
