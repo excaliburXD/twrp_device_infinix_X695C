@@ -173,6 +173,7 @@ TARGET_SCREEN_HEIGHT := 2460
 
 # Decryption
 TW_INCLUDE_CRYPTO := true
+TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.keymaster@4.0.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.keymaster@4.1.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
