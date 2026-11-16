@@ -40,7 +40,6 @@ TARGET_OTA_ASSERT_DEVICE := X695C,Infinix-X695C
 
 # Kernel
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
-BOARD_KERNEL_CMDLINE += androidboot.force_normal_boot=1
 BOARD_KERNEL_BASE := 0x40078000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_RAMDISK_OFFSET := 0x07c08000
@@ -91,7 +90,7 @@ BOARD_BOOTIMAGE_PARTITION_SIZE := 33554432
 BOARD_SUPER_PARTITION_SIZE := 8663334912
 BOARD_SUPER_PARTITION_GROUPS := main
 
-BOARD_MAIN_PARTITION_LIST := system vendor product
+BOARD_MAIN_PARTITION_LIST := system system_ext vendor product
 BOARD_MAIN_SIZE := 8659103744 # (BOARD_SUPER_PARTITION_SIZE - 4MB)
 
 # File systems
@@ -103,6 +102,7 @@ BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_USERIMAGES_USE_F2FS := true
+TARGET_USERIMAGES_USE_EXT4 := true
 
 # AB
 AB_OTA_UPDATER := true
@@ -118,12 +118,17 @@ TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 
 # Additional binaries & libraries needed for recovery
 TARGET_RECOVERY_DEVICE_MODULES += \
+    android.hardware.keymaster@4.0 \
+    android.hardware.keymaster@4.1 \
     libkeymaster4 \
-    libpuresoftkeymasterdevice
+    libkeymaster41 \
+    libkeymaster4_1support \
+    libkeymaster_messages \
+    libpuresoftkeymasterdevice.so
 
 # Hack: prevent anti rollback
-PLATFORM_SECURITY_PATCH := 2127-12-31
-PLATFORM_VERSION := 99.87.36
+PLATFORM_SECURITY_PATCH := 2099-12-31
+PLATFORM_VERSION := 11.0.0
 PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
@@ -136,7 +141,7 @@ TW_CUSTOM_BATTERY_POS := "790"
 
 # TWRP-Specific configuration
 TW_THEME := portrait_hdpi
-TW_DEVICE_VERSION := Prebuilt | excaliburXD
+TW_DEVICE_VERSION := prebuilt android-11 | excaliburXD
 TW_EXTRA_LANGUAGES := false
 TW_DEFAULT_LANGUAGE := en
 TW_INCLUDE_NTFS_3G := true
@@ -168,10 +173,17 @@ TARGET_SCREEN_HEIGHT := 2460
 
 # Decryption
 TW_INCLUDE_CRYPTO := true
-TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.keymaster@4.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.keymaster@4.1.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so
+    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster41.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4_1support.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster_messages.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so 
+TW_INCLUDE_CRYPTO_FBE := true
 TW_INCLUDE_FBE_METADATA_DECRYPT := true
+TW_USE_FSCRYPT_POLICY := 2
+TW_PREPARE_DATA_MEDIA_EARLY := true
 
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_Infinix-X695C

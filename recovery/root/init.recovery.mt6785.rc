@@ -5,7 +5,6 @@ on init
 
 on post-fs
     # Support A/B feature for EMMC and UFS boot region
-    wait /dev/block/mmcblk0boot0 2
     symlink /dev/block/sda /dev/block/mmcblk0boot0
     symlink /dev/block/sdb /dev/block/mmcblk0boot1
     symlink /dev/block/mmcblk0boot0 /dev/block/platform/bootdevice/by-name/preloader_a
@@ -48,6 +47,14 @@ on fs
 
     install_keyring
 
+service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
+    class main
+    user root
+    group root system
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
 service keystore_auth /system/bin/keystore_auth
     user system
     group root
@@ -59,14 +66,6 @@ service keystore /system/bin/keystore /tmp/misc/keystore
     user root
     group root drmrpc readproc log
     disabled
-    seclabel u:r:recovery:s0
-
-service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
-    class main
-    user root
-    group root system
-    disabled
-    oneshot
     seclabel u:r:recovery:s0
 
 service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service
