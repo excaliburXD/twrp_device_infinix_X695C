@@ -1,8 +1,6 @@
 #
-# Copyright (C) 2020 The Android Open Source Project
-# Copyright (C) 2026 The TWRP Open Source Project
-# Copyright (C) 2026 The OrangeFox Recovery Project
-# Copyright (C) 2020 SebaUbuntu's TWRP device tree generator
+# Copyright (C) 2023 The Android Open Source Project
+# Copyright (C) 2023 SebaUbuntu's TWRP device tree generator
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -18,6 +16,7 @@ ENABLE_VIRTUAL_AB := true
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 
 # A/B
+ENABLE_VIRTUAL_AB := true
 AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
     boot \
@@ -50,11 +49,10 @@ PRODUCT_PACKAGES += \
 
 # Dynamic Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
-PRODUCT_BUILD_SUPER_PARTITION := true
 
 # API
-PRODUCT_SHIPPING_API_LEVEL := 28
-BOARD_VNDK_VERSION := current
+PRODUCT_SHIPPING_API_LEVEL := 30
+PRODUCT_TARGET_VNDK_VERSION :=
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
