@@ -72,10 +72,20 @@ service vendor.keymaster-4-0-beanpod /vendor/bin/hw/android.hardware.keymaster@4
     disabled
     seclabel u:r:recovery:s0
 
+on property:vendor.sys.listener.registered=true
+    start teei_daemon
+    start beanpod_check_keybox_service
+    start vendor.gatekeeper-1-0
+    start vendor.keymaster-4-0-beanpod
+
 on property:crypto.ready=1
+    start teei_daemon
+    start beanpod_check_keybox_service
     start vendor.keymaster-4-0-beanpod
 
 on property:hwservicemanager.ready=true
+    start teei_daemon
+    start beanpod_check_keybox_service
     start vendor.keymaster-4-0-beanpod
     start vendor.gatekeeper-1-0
 
